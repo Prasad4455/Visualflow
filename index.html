@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeFlow — Open Source Architecture Intelligence</title>
+    <title>VisualFlow — Open Source Architecture Intelligence</title>
     <meta name="description" content="Visualize any GitHub repository's architecture in seconds. See dependencies, blast radius, code ownership, security issues, and design patterns. No installation required.">
     <meta name="keywords" content="code visualization, architecture, github, dependency graph, blast radius, code analysis, open source">
-    <meta name="author" content="CodeFlow">
+    <meta name="author" content="VisualFlow">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="CodeFlow — Visualize Your Codebase Architecture">
+    <meta property="og:title" content="VisualFlow — Visualize Your Codebase Architecture">
     <meta property="og:description" content="Turn any GitHub repo into an interactive architecture map in seconds. Zero setup, privacy-first, runs in your browser.">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="codeflow-social.png">
+    <meta property="og:image" content="VisualFlow-social.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="CodeFlow — Visualize Your Codebase Architecture">
+    <meta name="twitter:title" content="VisualFlow — Visualize Your Codebase Architecture">
     <meta name="twitter:description" content="Turn any GitHub repo into an interactive architecture map in seconds. Zero setup, privacy-first.">
-    <meta name="twitter:image" content="codeflow-social.png">
+    <meta name="twitter:image" content="">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300ff9d' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M13 2 4 14h6l-1 8 9-12h-6l1-8z'/></svg>">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" integrity="sha512-8Q6Y9XnTbOE+JNvjBQwJ2H8S+UV4uA6hiRykhdtIyDYZ2TprdNmWOUaKdGzOhyr4dCyk287OejbPvwl7lrfqrQ==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js" integrity="sha512-MOCpqoRoisCTwJ8vQQiciZv0qcpROCidek3GTFS6KTk2+y7munJIlKCVkFCYY+p3ErYFXCjmFjnfTTRSC1OHWQ==" crossorigin="anonymous"></script>
@@ -597,7 +597,7 @@ body{height:100dvh;min-height:100dvh}
 <div id="root"></div>
 <script type="text/babel">
 /*
- * CodeFlow is intentionally shipped as one HTML file.
+ * VisualFlow is intentionally shipped as one HTML file.
  *
  * The file is organized in five broad sections:
  * 1. Shared constants, exclusion helpers, and browser-yield utilities.
@@ -763,7 +763,7 @@ function yieldToBrowser(){
 // Parser And Static Analysis
 // ---------------------------------------------------------------------------
 
-// ===== CODEFLOW_ANALYZER_START =====
+// ===== VisualFlow_ANALYZER_START =====
 const Parser={
     // Tree-sitter parsers are loaded lazily from CDN and used when a language has
     // a stable grammar path. Regex remains an explicit fallback, not a silent lie.
@@ -3278,8 +3278,8 @@ function createAnalysisWorkerSource(){
         return response.text();
     }).then(function(html){
         // Build markers via concatenation so they don't match themselves in the slice.
-        var startMarker='// ===== CODEFLOW_'+'ANALYZER_START =====';
-        var endMarker='// ===== CODEFLOW_'+'ANALYZER_END =====';
+        var startMarker='// ===== VisualFlow_'+'ANALYZER_START =====';
+        var endMarker='// ===== VisualFlow_'+'ANALYZER_END =====';
         var parserStart=html.indexOf(startMarker);
         var parserEnd=html.indexOf(endMarker,parserStart);
         if(parserStart<0||parserEnd<0)throw new Error('Analyzer source markers missing');
@@ -3353,13 +3353,13 @@ function runAnalysisData(options){
         return buildAnalysisData(options);
     });
 }
-// ===== CODEFLOW_ANALYZER_END =====
+// ===== VisualFlow_ANALYZER_END =====
 
 // ---------------------------------------------------------------------------
 // Visualization Helpers
 // ---------------------------------------------------------------------------
 
-// ===== CODEFLOW_METRICS_START =====
+// ===== VisualFlow_METRICS_START =====
 function calcBlast(fileId,conns,files){
     // Comprehensive impact analysis for a file
     // Connection format: {source: fileDefiningFn, target: fileCallingFn, fn: fnName, count: callCount}
@@ -3464,7 +3464,7 @@ function calcHealth(data){
     if(score>=90)grade='A';else if(score>=80)grade='B';else if(score>=70)grade='C';else if(score>=60)grade='D';
     return{score:score,grade:grade};
 }
-// ===== CODEFLOW_METRICS_END =====
+// ===== VisualFlow_METRICS_END =====
 
 function calcPRRisk(prData, repoData) {
     if (!prData || !repoData) return { score: 0, level: 'low', factors: [] };
@@ -3809,13 +3809,13 @@ function getDialogTone(tone){
 class ErrorBoundary extends React.Component{
     constructor(props){super(props);this.state={hasError:false,error:null};}
     static getDerivedStateFromError(error){return{hasError:true,error:error};}
-    componentDidCatch(error,info){console.error('CodeFlow crashed:',error,info);}
+    componentDidCatch(error,info){console.error('VisualFlow crashed:',error,info);}
     render(){
         if(this.state.hasError){
             var self=this;
             return React.createElement('div',{style:{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',height:'100vh',background:'var(--bg0)',color:'var(--t0)',fontFamily:'JetBrains Mono, monospace',padding:40,textAlign:'center'}},
                 React.createElement(Icon,{name:'logo',size:'xxl',className:'empty-icon'}),
-                React.createElement('h2',{style:{marginBottom:12,color:'var(--acc)'}},'CodeFlow ran into an issue'),
+                React.createElement('h2',{style:{marginBottom:12,color:'var(--acc)'}},'VisualFlow ran into an issue'),
                 React.createElement('p',{style:{color:'var(--t2)',marginBottom:8,maxWidth:500}},'The codebase may be too large for your browser\'s available memory. Try analyzing a subfolder instead, or close other browser tabs to free memory.'),
                 React.createElement('p',{style:{color:'var(--t3)',fontSize:11,marginBottom:20}},String(this.state.error)),
                 React.createElement('button',{onClick:function(){self.setState({hasError:false,error:null});},style:{padding:'8px 20px',background:'var(--acc)',color:'var(--bg0)',border:'none',borderRadius:6,cursor:'pointer',fontFamily:'inherit',fontWeight:600}},'Reload')
@@ -4278,7 +4278,7 @@ function App(){
                     message:
                         'This GitHub repository has '+files.length+' analyzable files.\n\n'+
                         'The browser cannot read GitHub zipball archives directly because GitHub redirects archive downloads to a CORS-restricted host.\n\n'+
-                        'For full analysis: download the repository ZIP from GitHub, then use Open ZIP in CodeFlow.\n\n'+
+                        'For full analysis: download the repository ZIP from GitHub, then use Open ZIP in VisualFlow.\n\n'+
                         'Continue now with a '+HARD_LIMIT+'-file API sample?',
                     confirmLabel:'Analyze sample'
                 }).then(function(proceed){
@@ -4434,7 +4434,7 @@ function App(){
                 title:'Analyze '+fileCount+' files?',
                 message:
                     'This folder has '+fileCount+' analyzable files.\n\n'+
-                    'CodeFlow will analyze every eligible file. Large folders can take minutes and use significant browser memory.\n\n'+
+                    'VisualFlow will analyze every eligible file. Large folders can take minutes and use significant browser memory.\n\n'+
                     'Continue with all '+fileCount+' files?',
                 confirmLabel:'Analyze all files'
             });
@@ -4550,7 +4550,7 @@ function App(){
                     title:'Analyze '+fileCount+' files?',
                     message:
                         'This folder has '+fileCount+' analyzable files.\n\n'+
-                        'CodeFlow will analyze every eligible file. Large folders can take minutes and use significant browser memory.\n\n'+
+                        'VisualFlow will analyze every eligible file. Large folders can take minutes and use significant browser memory.\n\n'+
                         'Continue with all '+fileCount+' files?',
                     confirmLabel:'Analyze all files'
                 });
@@ -4644,7 +4644,7 @@ function App(){
                     title:'Analyze '+fileCount+' files?',
                     message:
                         'This ZIP archive has '+fileCount+' analyzable files.\n\n'+
-                        'CodeFlow will analyze every eligible file. Large archives can take minutes and use significant browser memory.\n\n'+
+                        'VisualFlow will analyze every eligible file. Large archives can take minutes and use significant browser memory.\n\n'+
                         'Continue with all '+fileCount+' files?',
                     confirmLabel:'Analyze all files'
                 });
@@ -5555,7 +5555,7 @@ function App(){
         root+='}';
         return root+'text{font-family:JetBrains Mono,monospace;pointer-events:none}';
     }
-    function exportSVG(){if(!svgRef.current)return;var svgClone=svgRef.current.cloneNode(true);svgClone.setAttribute('xmlns','http://www.w3.org/2000/svg');svgClone.setAttribute('width',svgRef.current.clientWidth);svgClone.setAttribute('height',svgRef.current.clientHeight);var style=document.createElementNS('http://www.w3.org/2000/svg','style');style.textContent=getEmbeddedSvgStyle();svgClone.insertBefore(style,svgClone.firstChild);var blob=new Blob([new XMLSerializer().serializeToString(svgClone)],{type:'image/svg+xml'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='codeflow-'+Date.now()+'.svg';a.click();URL.revokeObjectURL(url);}
+    function exportSVG(){if(!svgRef.current)return;var svgClone=svgRef.current.cloneNode(true);svgClone.setAttribute('xmlns','http://www.w3.org/2000/svg');svgClone.setAttribute('width',svgRef.current.clientWidth);svgClone.setAttribute('height',svgRef.current.clientHeight);var style=document.createElementNS('http://www.w3.org/2000/svg','style');style.textContent=getEmbeddedSvgStyle();svgClone.insertBefore(style,svgClone.firstChild);var blob=new Blob([new XMLSerializer().serializeToString(svgClone)],{type:'image/svg+xml'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='VisualFlow-'+Date.now()+'.svg';a.click();URL.revokeObjectURL(url);}
     function graphSvgToPngDataUrlForPdf(scale,done){
         scale=scale||2;
         if(!svgRef.current){done('No graph to export');return;}
@@ -5626,14 +5626,14 @@ function App(){
                     var x=margin+(maxW-drawW)/2;
                     var y=margin+(maxH-drawH)/2;
                     doc.addImage(dataUrl,'PNG',x,y,drawW,drawH);
-                    doc.save('codeflow-'+Date.now()+'.pdf');
+                    doc.save('VisualFlow-'+Date.now()+'.pdf');
                 }catch(ex){
                     showNotification(ex.message||'PDF export failed','error');
                 }
             });
         });
     }
-    function exportJSON(){if(!data)return;var blob=new Blob([JSON.stringify({stats:data.stats,files:data.files.map(function(f){return{path:f.path,fns:f.functions.length,layer:f.layer,lines:f.lines,dependencies:f.dependencies||[]};}),connections:data.connections,issues:data.issues,patterns:data.patterns,security:data.securityIssues},null,2)],{type:'application/json'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='codeflow-analysis.json';a.click();}
+    function exportJSON(){if(!data)return;var blob=new Blob([JSON.stringify({stats:data.stats,files:data.files.map(function(f){return{path:f.path,fns:f.functions.length,layer:f.layer,lines:f.lines,dependencies:f.dependencies||[]};}),connections:data.connections,issues:data.issues,patterns:data.patterns,security:data.securityIssues},null,2)],{type:'application/json'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='VisualFlow-analysis.json';a.click();}
     function getAnalysisSourceLabel(){
         if(localSourceKind==='folder')return'Local Folder';
         if(localSourceKind==='zip')return repoInfo&&repoInfo.name?repoInfo.name:'ZIP Archive';
@@ -5646,7 +5646,7 @@ function App(){
         var report={
             repository:repo,
             analyzedAt:new Date().toISOString(),
-            codeflowVersion:'1.0',
+            VisualFlowVersion:'1.0',
             summary:{
                 healthScore:h.score,
                 healthGrade:h.grade,
@@ -5726,9 +5726,9 @@ function App(){
         };
         if(format==='json'){
             var blob=new Blob([JSON.stringify(report,null,2)],{type:'application/json'});
-            var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='codeflow-report.json';a.click();URL.revokeObjectURL(url);
+            var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='VisualFlow-report.json';a.click();URL.revokeObjectURL(url);
         }else if(format==='md'){
-            var md='# CodeFlow Analysis Report\n\n';
+            var md='# VisualFlow Analysis Report\n\n';
             md+='**Repository:** '+repo+'\n';
             md+='**Analyzed:** '+new Date().toLocaleString()+'\n\n';
             md+='## Summary\n\n';
@@ -5796,9 +5796,9 @@ function App(){
             });
             if(data.files.length>100)md+='\n*...and '+(data.files.length-100)+' more files*\n';
             var blob=new Blob([md],{type:'text/markdown'});
-            var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='codeflow-report.md';a.click();URL.revokeObjectURL(url);
+            var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='VisualFlow-report.md';a.click();URL.revokeObjectURL(url);
         }else if(format==='txt'){
-            var txt='CODEFLOW ANALYSIS REPORT\n';
+            var txt='VisualFlow ANALYSIS REPORT\n';
             txt+='========================\n\n';
             txt+='Repository: '+repo+'\n';
             txt+='Analyzed: '+new Date().toLocaleString()+'\n\n';
@@ -5860,7 +5860,7 @@ function App(){
             });
             if(data.connections.length>100)txt+='\n...and '+(data.connections.length-100)+' more dependencies\n';
             var blob=new Blob([txt],{type:'text/plain'});
-            var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='codeflow-report.txt';a.click();URL.revokeObjectURL(url);
+            var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='VisualFlow-report.txt';a.click();URL.revokeObjectURL(url);
         }
         showNotification('Report exported as '+format.toUpperCase(),'success');
     }
@@ -5885,7 +5885,7 @@ function App(){
                 React.createElement('div',{className:'mobile-brand-row'},
                     React.createElement('div',{className:'logo',onClick:function(){setShowPrivacy(true);}},
                         React.createElement('div',{className:'logo-mark'},React.createElement(Icon,{name:'logo',size:'l'})),
-                        React.createElement('span',{className:'logo-text'},'CODEFLOW')
+                        React.createElement('span',{className:'logo-text'},'VisualFlow')
                     ),
                     React.createElement('div',{className:'mobile-action-stack'},
                         data&&!localSourceKind&&React.createElement('button',{className:'top-btn mobile-icon-btn','aria-label':'Analyze Pull Request',title:'Pull Request',onClick:function(){setShowPR(true);},type:'button'},React.createElement(Icon,{name:'pull-request',size:'m'})),
@@ -5943,7 +5943,7 @@ function App(){
             ),
             React.createElement('div',{className:'logo',onClick:function(){setShowPrivacy(true);}},
                 React.createElement('div',{className:'logo-mark'},React.createElement(Icon,{name:'logo',size:'l'})),
-                React.createElement('span',{className:'logo-text'},'CODEFLOW')
+                React.createElement('span',{className:'logo-text'},'VisualFlow')
             ),
             React.createElement('div',{className:'repo-input-group'},
                 React.createElement('input',{className:'repo-input','aria-label':'Repository URL',placeholder:'owner/repo or GitHub URL',value:repoUrl,onChange:function(e){setRepoUrl(e.target.value);},onKeyDown:function(e){if(e.key==='Enter'&&!loading)analyze();}}),
@@ -6084,7 +6084,7 @@ function App(){
                 loading?React.createElement('div',{className:'loading'},React.createElement('div',{className:'spinner'}),React.createElement('div',{className:'loading-text'},'Analyzing...'),React.createElement('div',{className:'loading-progress'},progress)):
                 !data?React.createElement('div',{className:'empty-state'},
                     React.createElement(Icon,{name:'logo',size:'xxl',className:'empty-icon'}),
-                    React.createElement('div',{className:'empty-title'},'CodeFlow'),
+                    React.createElement('div',{className:'empty-title'},'VisualFlow'),
                     React.createElement('div',{className:'empty-desc'},'Visualize architecture, blast radius, ownership, patterns & security\n\nEnter a GitHub URL, open a folder, or load a ZIP archive')
                 ):
                 React.createElement(React.Fragment,null,
@@ -6775,7 +6775,7 @@ function App(){
                 React.createElement('div',{className:'modal-body'},
                     React.createElement('div',{className:'privacy-item'},
                         React.createElement('div',{className:'privacy-icon'},React.createElement(Icon,{name:'globe',size:'l'})),
-                        React.createElement('div',null,React.createElement('div',{className:'privacy-title'},'100% Browser-Based'),React.createElement('div',{className:'privacy-text'},'CodeFlow runs entirely in your browser. No backend servers, no data collection.'))
+                        React.createElement('div',null,React.createElement('div',{className:'privacy-title'},'100% Browser-Based'),React.createElement('div',{className:'privacy-text'},'VisualFlow runs entirely in your browser. No backend servers, no data collection.'))
                     ),
                     React.createElement('div',{className:'privacy-item'},
                         React.createElement('div',{className:'privacy-icon'},React.createElement(Icon,{name:'key',size:'l'})),
