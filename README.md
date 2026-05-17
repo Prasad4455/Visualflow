@@ -6,7 +6,7 @@
 
 **Zero setup. No installation. Just paste a GitHub URL.**
 
-<img src="" alt="VisualFlow Screenshot" width="100%"/>
+<img src="" alt="" width="100%"/>
 
 </div>
 
