@@ -1,6 +1,6 @@
 <div align="center">
 
-# CodeFlow
+# VisualFlow
 
 ### Visualize Your Codebase Architecture in Seconds
 
